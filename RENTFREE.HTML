@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>EasyRent</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: Arial, sans-serif; }
+    body { background: #f4f6f8; }
+    header { background: #2c3e50; color: #fff; padding: 20px; text-align: center; }
+    nav a { color: #fff; margin: 0 15px; text-decoration: none; font-weight: bold; }
+
+    .container { padding: 30px; }
+    .search-box { text-align: center; margin-bottom: 30px; }
+    .search-box input {
+      width: 60%; padding: 12px; border-radius: 6px; border: 1px solid #ccc;
+    }
+
+    .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; }
+    .card {
+      background: #fff; border-radius: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      overflow: hidden; transition: transform 0.3s;
+    }
+    .card:hover { transform: translateY(-5px); }
+    .card img { width: 100%; height: 180px; object-fit: cover; }
+    .card-body { padding: 15px; }
+    .card-body h3 { margin-bottom: 10px; }
+    .price { color: #27ae60; font-weight: bold; margin-bottom: 10px; }
+    .card-body button {
+      background: #2980b9; color: #fff; border: none; padding: 10px 15px;
+      border-radius: 6px; cursor: pointer;
+    }
+    .card-body button:hover { background: #1f6391; }
+
+    footer { text-align: center; padding: 15px; background: #2c3e50; color: #fff; margin-top: 30px; }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>EasyRent</h1>
+    <nav>
+      <a href="#">Home</a>
+      <a href="#">Properties</a>
+      <a href="#">Contact</a>
+    </nav>
+  </header>
+
+  <div class="container">
+    <div class="search-box">
+      <input type="text" id="search" placeholder="Search house, room, shop..." />
+    </div>
+
+    <div class="cards" id="propertyList">
+      <div class="card" data-name="house">
+        <img src="https://picsum.photos/400/200?1" />
+        <div class="card-body">
+          <h3>2BHK House</h3>
+          <p class="price">₹12,000 / month</p>
+          <button onclick="rentNow('2BHK House')">Rent Now</button>
+        </div>
+      </div>
+
+      <div class="card" data-name="room">
+        <img src="https://picsum.photos/400/200?2" />
+        <div class="card-body">
+          <h3>Single Room</h3>
+          <p class="price">₹5,000 / month</p>
+          <button onclick="rentNow('Single Room')">Rent Now</button>
+        </div>
+      </div>
+
+      <div class="card" data-name="shop">
+        <img src="https://picsum.photos/400/200?3" />
+        <div class="card-body">
+          <h3>Commercial Shop</h3>
+          <p class="price">₹20,000 / month</p>
+          <button onclick="rentNow('Commercial Shop')">Rent Now</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <p>© 2026 EasyRent | All Rights Reserved</p>
+  </footer>
+
+  <script>
+    const searchInput = document.getElementById('search');
+    const cards = document.querySelectorAll('.card');
+
+    searchInput.addEventListener('keyup', () => {
+      const value = searchInput.value.toLowerCase();
+      cards.forEach(card => {
+        const name = card.getAttribute('data-name');
+        card.style.display = name.includes(value) ? 'block' : 'none';
+      });
+    });
+
+    function rentNow(property) {
+      alert('You selected: ' + property + '\nOur team will contact you soon!');
+    }
+  </script>
+
+</body>
+</html>

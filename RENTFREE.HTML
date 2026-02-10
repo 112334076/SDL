@@ -4,39 +4,103 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>EasyRent</title>
+
   <style>
-    * { box-sizing: border-box; margin: 0; padding: 0; font-family: Arial, sans-serif; }
-    body { background: #f4f6f8; }
-    header { background: #2c3e50; color: #fff; padding: 20px; text-align: center; }
-    nav a { color: #fff; margin: 0 15px; text-decoration: none; font-weight: bold; }
+    /* Reset and font */
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Arial', sans-serif; }
+    
+    /* Gradient background */
+    body {
+      background: linear-gradient(135deg, #f0f4f8, #d9e2ec);
+      margin-top: 70px;
+    }
 
-    .container { padding: 30px; }
-    .search-box { text-align: center; margin-bottom: 30px; }
+    /* Header */
+    header {
+      background: #2c3e50;
+      color: #fff;
+      height: 70px;
+      position: fixed;
+      top: 0; left: 0; width: 100%;
+      z-index: 1000;
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 0 30px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+    header h1 { font-size: 24px; letter-spacing: 1px; }
+    nav a { color: #fff; margin-left: 20px; text-decoration: none; font-weight: 600; transition: 0.3s; }
+    nav a:hover { text-decoration: underline; color: #1abc9c; }
+
+    /* Container */
+    .container { max-width: 1200px; margin: auto; padding: 20px 30px; }
+
+    /* Search box */
+    .search-box { display: flex; justify-content: center; margin-bottom: 25px; }
     .search-box input {
-      width: 60%; padding: 12px; border-radius: 6px; border: 1px solid #ccc;
+      width: 60%; max-width: 500px; padding: 14px 18px;
+      border-radius: 30px; border: 1px solid #dcdcdc;
+      font-size: 16px; outline: none; transition: all 0.3s ease;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+    }
+    .search-box input::placeholder { color: #999; }
+    .search-box input:focus { border-color: #1abc9c; box-shadow: 0 4px 12px rgba(26,188,156,0.25); }
+
+    /* Cards grid */
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
     }
 
-    .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; }
+    /* Individual card */
     .card {
-      background: #fff; border-radius: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-      overflow: hidden; transition: transform 0.3s;
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+      overflow: hidden;
+      transition: transform 0.3s, box-shadow 0.3s;
     }
-    .card:hover { transform: translateY(-5px); }
+    .card:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0,0,0,0.15); }
     .card img { width: 100%; height: 180px; object-fit: cover; }
-    .card-body { padding: 15px; }
-    .card-body h3 { margin-bottom: 10px; }
-    .price { color: #27ae60; font-weight: bold; margin-bottom: 10px; }
-    .card-body button {
-      background: #2980b9; color: #fff; border: none; padding: 10px 15px;
-      border-radius: 6px; cursor: pointer;
-    }
-    .card-body button:hover { background: #1f6391; }
 
-    footer { text-align: center; padding: 15px; background: #2c3e50; color: #fff; margin-top: 30px; }
+    /* Card body */
+    .card-body { padding: 15px; }
+    .card-body h3 { font-size: 18px; margin-bottom: 8px; color: #2c3e50; }
+    .price { color: #27ae60; font-weight: bold; margin: 8px 0; font-size: 16px; }
+    button {
+      background: #1abc9c;
+      color: #fff;
+      border: none;
+      padding: 10px 16px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: background 0.3s;
+    }
+    button:hover { background: #159a85; }
+
+    /* Empty search result */
+    .empty {
+      text-align: center;
+      font-size: 18px;
+      color: #777;
+      grid-column: 1 / -1;
+      padding: 20px 0;
+    }
+
+    /* Footer */
+    footer { text-align: center; padding: 20px; background: #2c3e50; color: #fff; margin-top: 40px; font-size: 14px; }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .search-box input { width: 90%; }
+      header { flex-direction: column; height: auto; padding: 10px 0; }
+      body { margin-top: 100px; }
+    }
   </style>
 </head>
-<body>
 
+<body>
   <header>
     <h1>EasyRent</h1>
     <nav>
@@ -48,37 +112,9 @@
 
   <div class="container">
     <div class="search-box">
-      <input type="text" id="search" placeholder="Search house, room, shop..." />
+      <input type="text" id="search" placeholder="🔍 Search house, room, shop..." />
     </div>
-
-    <div class="cards" id="propertyList">
-      <div class="card" data-name="house">
-        <img src="https://picsum.photos/400/200?1" />
-        <div class="card-body">
-          <h3>2BHK House</h3>
-          <p class="price">₹12,000 / month</p>
-          <button onclick="rentNow('2BHK House')">Rent Now</button>
-        </div>
-      </div>
-
-      <div class="card" data-name="room">
-        <img src="https://picsum.photos/400/200?2" />
-        <div class="card-body">
-          <h3>Single Room</h3>
-          <p class="price">₹5,000 / month</p>
-          <button onclick="rentNow('Single Room')">Rent Now</button>
-        </div>
-      </div>
-
-      <div class="card" data-name="shop">
-        <img src="https://picsum.photos/400/200?3" />
-        <div class="card-body">
-          <h3>Commercial Shop</h3>
-          <p class="price">₹20,000 / month</p>
-          <button onclick="rentNow('Commercial Shop')">Rent Now</button>
-        </div>
-      </div>
-    </div>
+    <div class="cards" id="propertyList"></div>
   </div>
 
   <footer>
@@ -86,21 +122,79 @@
   </footer>
 
   <script>
-    const searchInput = document.getElementById('search');
-    const cards = document.querySelectorAll('.card');
+    const properties = [
+      { name: "2BHK House", type: "house", price: "₹12,000 / month", image: "./a.jpg" },
+      { name: "Family House", type: "house", price: "₹15,000 / month", image: "./b.jpg" },
+      { name: "Luxury Villa", type: "house", price: "₹50,000 / month", image: "./c.jpg" },
+      { name: "2BHK Room", type: "room", price: "₹30,000 / month", image: "./d.jpg" },
+      { name: "Single Room", type: "room", price: "₹5,000 / month", image: "./e.jpg" },
+      { name: "Shared Room", type: "room", price: "₹8,000 / month", image: "./f.jpg" },
+      { name: "Studio Room", type: "room", price: "₹10,000 / month", image: "./h.jpg" },
+      { name: "Luxury Room", type: "room", price: "₹20,000 / month", image: "./g.jpg" },
+      { name: "Coffee Shop", type: "shop", price: "₹20,000 / month", image: "./i.jpg" },
+      { name: "Bakery Shop", type: "shop", price: "₹15,000 / month", image: "./j.jpg" },
+      { name: "Clothing Store", type: "shop", price: "₹25,000 / month", image: "./l.jpg" },
+      { name: "Bookstore", type: "shop", price: "₹12,000 / month", image: "./k.jpg" },
+      { name: "Salon", type: "shop", price: "₹18,000 / month", image: "./m.jpg" },
+      { name: "Grocery Shop", type: "shop", price: "₹22,000 / month", image: "./n.jpg" },
+      { name: "Electronics Shop", type: "shop", price: "₹35,000 / month", image: "./o.jpg" },
+      // Extra properties
+      { name: "3BHK House", type: "house", price: "₹18,000 / month", image: "./f.jpg" },
+      { name: "Villa with Pool", type: "house", price: "₹60,000 / month", image: "./g.jpg" },
+      { name: "Townhouse", type: "house", price: "₹22,000 / month", image: "./r.jpg" },
+      { name: "Deluxe Room", type: "room", price: "₹25,000 / month", image: "./g.jpg" },
+      { name: "Economy Room", type: "room", price: "₹6,000 / month", image: "./i.jpg" },
+      { name: "Penthouse Room", type: "room", price: "₹40,000 / month", image: "./r.jpg" },
+      { name: "Cozy Room", type: "room", price: "₹12,000 / month", image: "./v.jpg" },
+      { name: "Modern Room", type: "room", price: "₹15,000 / month", image: "./r.jpg" },
+      { name: "Tea Shop", type: "shop", price: "₹10,000 / month", image: "./e.jpg" },
+      { name: "Ice Cream Shop", type: "shop", price: "₹18,000 / month", image: "./t.jpg" },
+      { name: "Sports Store", type: "shop", price: "₹28,000 / month", image: "./f.jpg" },
+      { name: "Pet Store", type: "shop", price: "₹16,000 / month", image: "./g.jpg" },
+      { name: "Flower Shop", type: "shop", price: "₹14,000 / month", image: "./t.jpg" },
+      { name: "Furniture Shop", type: "shop", price: "₹30,000 / month", image: "./u.jpg" },
+      { name: "Toy Store", type: "shop", price: "₹12,500 / month", image: "./n.jpg" }
+    ];
 
-    searchInput.addEventListener('keyup', () => {
-      const value = searchInput.value.toLowerCase();
-      cards.forEach(card => {
-        const name = card.getAttribute('data-name');
-        card.style.display = name.includes(value) ? 'block' : 'none';
+    const propertyList = document.getElementById("propertyList");
+    const searchInput = document.getElementById("search");
+
+    function displayProperties(list) {
+      propertyList.innerHTML = "";
+      if(list.length === 0) {
+        propertyList.innerHTML = "<p class='empty'>No properties found</p>";
+        return;
+      }
+      list.forEach(item => {
+        const card = document.createElement("div");
+        card.className = "card";
+        card.innerHTML = `
+          <img src="${item.image}" alt="${item.name}">
+          <div class="card-body">
+            <h3>${item.name}</h3>
+            <p class="price">${item.price}</p>
+            <button>Rent Now</button>
+          </div>
+        `;
+        card.querySelector("button").onclick = () => {
+          alert("You selected: " + item.name + "\nOur team will contact you soon!");
+        };
+        propertyList.appendChild(card);
       });
+    }
+
+    let timer;
+    searchInput.addEventListener("input", () => {
+      clearTimeout(timer);
+      timer = setTimeout(() => {
+        const value = searchInput.value.toLowerCase().trim();
+        displayProperties(properties.filter(p =>
+          p.name.toLowerCase().includes(value) || p.type.toLowerCase().includes(value)
+        ));
+      }, 250);
     });
 
-    function rentNow(property) {
-      alert('You selected: ' + property + '\nOur team will contact you soon!');
-    }
+    displayProperties(properties);
   </script>
-
 </body>
 </html>

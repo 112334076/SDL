@@ -1,0 +1,61 @@
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+header {
+  background: #2c3e50;
+  color: white;
+  padding: 20px;
+  display: flex;
+  justify-content: space-between;
+}
+
+header nav a {
+  color: white;
+  margin-left: 15px;
+  text-decoration: none;
+}
+
+.hero {
+  text-align: center;
+  padding: 50px 20px;
+  background: #ecf0f1;
+}
+
+.search-bar {
+  margin-top: 20px;
+}
+
+.search-bar input {
+  padding: 10px;
+  width: 300px;
+}
+
+.search-bar button {
+  padding: 10px 20px;
+}
+
+.listings {
+  padding: 20px;
+}
+
+.cards {
+  display: flex;
+  gap: 20px;
+}
+
+.card {
+  padding: 20px;
+  border: 1px solid #ddd;
+  width: 30%;
+  text-align: center;
+}
+
+footer {
+  text-align: center;
+  padding: 10px;
+  background: #2c3e50;
+  color: white;
+}

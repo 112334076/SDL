@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EasyRent | Professional Rentals</title>
+
+<style>
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:"Segoe UI",Arial,sans-serif;
+}
+
+body{
+  background:#0b0b0b;
+  color:#eaeaea;
+  margin-top:80px;
+}
+
+header{
+  background:#000;
+  height:80px;
+  position:fixed;
+  top:0;
+  width:100%;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:0 40px;
+  border-bottom:2px solid #1abc9c;
+  z-index:1000;
+}
+
+header h1{
+  font-size:30px;
+  font-weight:900;
+  letter-spacing:3px;
+  text-transform:uppercase;
+  color:#1abc9c;
+}
+
+nav a{
+  color:#ddd;
+  margin-left:28px;
+  text-decoration:none;
+  font-weight:700;
+  text-transform:uppercase;
+}
+
+nav a:hover{color:#1abc9c}
+
+.container{
+  max-width:1300px;
+  margin:auto;
+  padding:40px 30px;
+}
+
+.search-box{
+  display:flex;
+  justify-content:center;
+  margin-bottom:40px;
+}
+
+.search-box input{
+  width:55%;
+  max-width:520px;
+  padding:16px 22px;
+  border-radius:40px;
+  border:2px solid #222;
+  background:#111;
+  color:#fff;
+  font-size:16px;
+  font-weight:600;
+  outline:none;
+}
+
+.search-box input:focus{
+  border-color:#1abc9c;
+  box-shadow:0 0 15px rgba(26,188,156,0.5);
+}
+
+.cards{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+  gap:30px;
+}
+
+.card{
+  background:#111;
+  border-radius:16px;
+  overflow:hidden;
+  border:1px solid #222;
+  transition:.3s;
+}
+
+.card:hover{
+  transform:translateY(-8px);
+  border-color:#1abc9c;
+  box-shadow:0 18px 40px rgba(0,0,0,.9);
+}
+
+.card img{
+  width:100%;
+  height:200px;
+  object-fit:cover;
+  filter:brightness(.85);
+}
+
+.card-body{
+  padding:18px;
+}
+
+.card-body h3{
+  font-size:19px;
+  font-weight:800;
+  margin-bottom:10px;
+}
+
+.price{
+  color:#1abc9c;
+  font-weight:700;
+  margin-bottom:15px;
+}
+
+button{
+  width:100%;
+  padding:12px;
+  background:#1abc9c;
+  color:#000;
+  border:none;
+  border-radius:8px;
+  font-weight:800;
+  cursor:pointer;
+}
+
+button:hover{
+  background:#16a085;
+}
+
+.empty{
+  grid-column:1/-1;
+  text-align:center;
+  color:#888;
+  font-size:18px;
+}
+
+footer{
+  margin-top:60px;
+  padding:25px;
+  text-align:center;
+  background:#000;
+  color:#777;
+  border-top:1px solid #222;
+}
+
+@media(max-width:768px){
+  .search-box input{width:90%}
+  header{flex-direction:column;height:auto;padding:15px 0}
+  body{margin-top:120px}
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <h1>EasyRent</h1>
+  <nav>
+    <a href="#">Home</a>
+    <a href="#">Properties</a>
+    <a href="#">Contact</a>
+  </nav>
+</header>
+
+<div class="container">
+  <div class="search-box">
+    <input type="text" id="search" placeholder="Search houses, rooms, shops...">
+  </div>
+  <div class="cards" id="propertyList"></div>
+</div>
+
+<footer>
+  © 2026 EasyRent — Professional Rental Platform
+</footer>
+
+<script>
+const properties = [
+  {name:"2BHK House",type:"house",price:"₹12,000 / month",image:"https://picsum.photos/400/300?random=1"},
+  {name:"3BHK House",type:"house",price:"₹18,000 / month",image:"https://picsum.photos/400/300?random=2"},
+  {name:"Luxury Villa",type:"house",price:"₹50,000 / month",image:"https://picsum.photos/400/300?random=3"},
+  {name:"Villa with Pool",type:"house",price:"₹65,000 / month",image:"https://picsum.photos/400/300?random=4"},
+  {name:"Town House",type:"house",price:"₹22,000 / month",image:"https://picsum.photos/400/300?random=5"},
+
+  {name:"Single Room",type:"room",price:"₹5,000 / month",image:"https://picsum.photos/400/300?random=6"},
+  {name:"Shared Room",type:"room",price:"₹8,000 / month",image:"https://picsum.photos/400/300?random=7"},
+  {name:"Studio Room",type:"room",price:"₹12,000 / month",image:"https://picsum.photos/400/300?random=8"},
+  {name:"Luxury Room",type:"room",price:"₹25,000 / month",image:"https://picsum.photos/400/300?random=9"},
+  {name:"Penthouse Room",type:"room",price:"₹40,000 / month",image:"https://picsum.photos/400/300?random=10"},
+
+  {name:"Coffee Shop",type:"shop",price:"₹20,000 / month",image:"https://picsum.photos/400/300?random=11"},
+  {name:"Bakery Shop",type:"shop",price:"₹15,000 / month",image:"https://picsum.photos/400/300?random=12"},
+  {name:"Clothing Store",type:"shop",price:"₹28,000 / month",image:"https://picsum.photos/400/300?random=13"},
+  {name:"Book Store",type:"shop",price:"₹12,000 / month",image:"https://picsum.photos/400/300?random=14"},
+  {name:"Electronics Shop",type:"shop",price:"₹35,000 / month",image:"https://picsum.photos/400/300?random=15"},
+
+  {name:"Grocery Shop",type:"shop",price:"₹22,000 / month",image:"https://picsum.photos/400/300?random=16"},
+  {name:"Salon",type:"shop",price:"₹18,000 / month",image:"https://picsum.photos/400/300?random=17"},
+  {name:"Medical Store",type:"shop",price:"₹14,000 / month",image:"https://picsum.photos/400/300?random=18"},
+  {name:"Gym Space",type:"shop",price:"₹30,000 / month",image:"https://picsum.photos/400/300?random=19"},
+  {name:"Pet Store",type:"shop",price:"₹16,000 / month",image:"https://picsum.photos/400/300?random=20"},
+
+  {name:"Office Space",type:"office",price:"₹45,000 / month",image:"https://picsum.photos/400/300?random=21"},
+  {name:"IT Office",type:"office",price:"₹55,000 / month",image:"https://picsum.photos/400/300?random=22"},
+  {name:"Startup Office",type:"office",price:"₹38,000 / month",image:"https://picsum.photos/400/300?random=23"},
+  {name:"Warehouse",type:"office",price:"₹60,000 / month",image:"https://picsum.photos/400/300?random=24"},
+  {name:"Showroom",type:"office",price:"₹70,000 / month",image:"https://picsum.photos/400/300?random=25"}
+];
+
+const list=document.getElementById("propertyList");
+const search=document.getElementById("search");
+
+function display(data){
+  list.innerHTML="";
+  if(data.length===0){
+    list.innerHTML="<p class='empty'>No properties found</p>";
+    return;
+  }
+  data.forEach(p=>{
+    const card=document.createElement("div");
+    card.className="card";
+    card.innerHTML=`
+      <img src="${p.image}">
+      <div class="card-body">
+        <h3>${p.name}</h3>
+        <p class="price">${p.price}</p>
+        <button>Rent Now</button>
+      </div>`;
+    card.querySelector("button").onclick=()=>alert("You selected: "+p.name);
+    list.appendChild(card);
+  });
+}
+
+search.addEventListener("input",()=>{
+  const v=search.value.toLowerCase();
+  display(properties.filter(p=>p.name.toLowerCase().includes(v)||p.type.includes(v)));
+});
+
+display(properties);
+</script>
+
+</body>
+</html>

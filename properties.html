@@ -1,28 +1,330 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Properties for Rent</title>
-  <link rel="stylesheet" href="s.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>House Properties | EasyRent</title>
+
+<style>
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:"Segoe UI",Arial,sans-serif;
+}
+
+body{
+  background:#0b0b0b;
+  color:#eaeaea;
+  margin-top:80px;
+}
+
+/* NAVBAR */
+header{
+  background:#000;
+  height:80px;
+  position:fixed;
+  top:0;
+  width:100%;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:0 40px;
+  border-bottom:2px solid #1abc9c;
+  z-index:1000;
+}
+
+header h1{
+  font-size:30px;
+  font-weight:900;
+  letter-spacing:3px;
+  text-transform:uppercase;
+  color:#1abc9c;
+}
+
+nav a{
+  color:#ddd;
+  margin-left:28px;
+  text-decoration:none;
+  font-weight:700;
+  text-transform:uppercase;
+}
+
+nav a:hover{color:#1abc9c}
+
+.container{
+  max-width:1300px;
+  margin:auto;
+  padding:40px 30px;
+}
+
+/* SEARCH */
+.search-box{
+  display:flex;
+  justify-content:center;
+  margin-bottom:40px;
+}
+
+.search-box input{
+  width:55%;
+  max-width:520px;
+  padding:16px 22px;
+  border-radius:40px;
+  border:2px solid #222;
+  background:#111;
+  color:#fff;
+  font-size:16px;
+  font-weight:600;
+  outline:none;
+}
+
+.search-box input:focus{
+  border-color:#1abc9c;
+  box-shadow:0 0 15px rgba(26,188,156,0.5);
+}
+
+/* CARDS */
+.cards{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+  gap:30px;
+}
+
+.card{
+  background:#111;
+  border-radius:16px;
+  overflow:hidden;
+  border:1px solid #222;
+  transition:.3s;
+}
+
+.card:hover{
+  transform:translateY(-8px);
+  border-color:#1abc9c;
+  box-shadow:0 18px 40px rgba(0,0,0,.9);
+}
+
+.card img{
+  width:100%;
+  height:200px;
+  object-fit:cover;
+  filter:brightness(.85);
+}
+
+.card-body{
+  padding:18px;
+}
+
+.card-body h3{
+  font-size:19px;
+  font-weight:800;
+  margin-bottom:10px;
+}
+
+.price{
+  color:#1abc9c;
+  font-weight:700;
+  margin-bottom:15px;
+}
+
+.info{
+  color:#ccc;
+  margin-bottom:10px;
+}
+
+button{
+  width:100%;
+  padding:12px;
+  background:#1abc9c;
+  color:#000;
+  border:none;
+  border-radius:8px;
+  font-weight:800;
+  cursor:pointer;
+}
+
+button:hover{
+  background:rgb(240, 67, 67);
+}
+
+.empty{
+  grid-column:1/-1;
+  text-align:center;
+  color:#888;
+  font-size:18px;
+}
+
+/* FOOTER */
+footer{
+  margin-top:60px;
+  padding:25px;
+  text-align:center;
+  background:#000;
+  color:#777;
+  border-top:1px solid #222;
+}
+
+/* MODAL */
+.modal-bg{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,0.8);
+  display:none;
+  justify-content:center;
+  align-items:center;
+  z-index:999;
+}
+
+.modal{
+  width:420px;
+  max-width:90%;
+  background:#121212;
+  border:1px solid #1abc9c;
+  padding:20px;
+  border-radius:10px;
+}
+
+.modal img{
+  width:100%;
+  border-radius:10px;
+  margin-bottom:10px;
+}
+
+.modal h2{
+  color:#1abc9c;
+  margin-bottom:10px;
+}
+
+.modal p{
+  color:#ddd;
+  margin-bottom:10px;
+}
+
+.modal button{
+  padding:10px 14px;
+  border:none;
+  border-radius:6px;
+  cursor:pointer;
+  font-weight:bold;
+  background:#1abc9c;
+  color:#000;
+}
+
+.modal button.close{
+  background:#111;
+  color:#fff;
+  margin-left:10px;
+}
+
+@media(max-width:768px){
+  .search-box input{width:90%}
+  header{flex-direction:column;height:auto;padding:15px 0}
+  body{margin-top:120px}
+}
+</style>
 </head>
+
 <body>
 
-  <header>
-    <h1>Properties for Rent</h1>
-  </header>
+<header>
+  <h1>EasyRent</h1>
+  <nav>
+    <a href="rent.html">Home</a>
+    <a href="properties.html">Properties</a>
+    <a href="contact.html">Contact</a>
+    <a href="about.html">About</a>
+  </nav>
+</header>
 
-  <main>
-    <section class="filters">
-      <input id="search" type="text" placeholder="Search by city, type, price...">
-      <button onclick="filterProperties()">Search</button>
-    </section>
+<div class="container">
+  <div class="search-box">
+    <input type="text" id="search" placeholder="Search houses...">
+  </div>
 
-    <section id="property-list" class="property-list">
-      <!-- Properties will be added here -->
-    </section>
-  </main>
+  <div class="cards" id="propertyList"></div>
+</div>
 
-  <script src="script.js"></script>
+<footer>
+  © 2026 EasyRent — Professional Rental Platform
+</footer>
+
+<!-- MODAL -->
+<div class="modal-bg" id="modalBg">
+  <div class="modal">
+    <img id="modalImg" src="">
+    <h2 id="modalTitle">Rent Confirmation</h2>
+    <p id="modalText">You selected: </p>
+    <p id="modalInfo"></p>
+    <button onclick="confirmRent()">Confirm</button>
+    <button class="close" onclick="closeModal()">Cancel</button>
+  </div>
+</div>
+
+<script>
+const properties = [
+  {name:"2BHK House", type:"house", price:12000, bed:"2 BHK", area:"850 sqft", city:"Chennai", image:"https://picsum.photos/400/300?random=1"},
+  {name:"3BHK House", type:"house", price:18000, bed:"3 BHK", area:"1100 sqft", city:"Chennai", image:"https://picsum.photos/400/300?random=2"},
+  {name:"Luxury Villa", type:"house", price:50000, bed:"4 BHK", area:"2500 sqft", city:"Bangalore", image:"https://picsum.photos/400/300?random=3"},
+  {name:"Villa with Pool", type:"house", price:65000, bed:"5 BHK", area:"3200 sqft", city:"Coimbatore", image:"https://picsum.photos/400/300?random=4"},
+  {name:"Town House", type:"house", price:22000, bed:"3 BHK", area:"1300 sqft", city:"Hyderabad", image:"https://picsum.photos/400/300?random=5"},
+  {name:"Single Floor House", type:"house", price:14000, bed:"2 BHK", area:"900 sqft", city:"Madurai", image:"https://picsum.photos/400/300?random=6"},
+  {name:"Duplex House", type:"house", price:28000, bed:"4 BHK", area:"1800 sqft", city:"Pune", image:"https://picsum.photos/400/300?random=7"},
+  {name:"Independent Villa", type:"house", price:35000, bed:"4 BHK", area:"2000 sqft", city:"Mumbai", image:"https://picsum.photos/400/300?random=8"},
+  {name:"Bungalow", type:"house", price:75000, bed:"6 BHK", area:"4000 sqft", city:"Delhi", image:"https://picsum.photos/400/300?random=9"},
+  {name:"Modern House", type:"house", price:26000, bed:"3 BHK", area:"1500 sqft", city:"Kochi", image:"https://picsum.photos/400/300?random=10"}
+];
+
+const list = document.getElementById("propertyList");
+const search = document.getElementById("search");
+
+let selectedProperty = "";
+
+function display(data){
+  list.innerHTML="";
+  if(data.length===0){
+    list.innerHTML="<p class='empty'>No properties found</p>";
+    return;
+  }
+  data.forEach(p=>{
+    const card=document.createElement("div");
+    card.className="card";
+    card.innerHTML=`
+      <img src="${p.image}">
+      <div class="card-body">
+        <h3>${p.name}</h3>
+        <p class="info">${p.city} • ${p.bed} • ${p.area}</p>
+        <p class="price">₹${p.price} / month</p>
+        <button onclick="openModal(${p.price}, '${p.name}', '${p.city}', '${p.bed}', '${p.area}', '${p.image}')">Rent Now</button>
+      </div>`;
+    list.appendChild(card);
+  });
+}
+
+function openModal(price, name, city, bed, area, img){
+  selectedProperty = name;
+  document.getElementById("modalImg").src = img;
+  document.getElementById("modalTitle").innerText = name;
+  document.getElementById("modalText").innerText = "You selected: " + name;
+  document.getElementById("modalInfo").innerText = city + " • " + bed + " • " + area + " • ₹" + price + "/month";
+  document.getElementById("modalBg").style.display = "flex";
+}
+
+function closeModal(){
+  document.getElementById("modalBg").style.display = "none";
+}
+
+function confirmRent(){
+  alert("Rent confirmed for: " + selectedProperty);
+  closeModal();
+}
+
+search.addEventListener("input",()=>{
+  const v = search.value.toLowerCase();
+  display(properties.filter(p => p.name.toLowerCase().includes(v) || p.city.toLowerCase().includes(v)));
+});
+
+display(properties);
+</script>
+
 </body>
 </html>

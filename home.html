@@ -1,235 +1,759 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Rent Home</title>
-
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Home - Rental Property Management</title>
+<link rel="stylesheet" href="style.css">
 <style>
-/* ---------- GLOBAL ---------- */
-*{
-  margin:0;
-  padding:0;
-  box-sizing:border-box;
-  font-family: Arial, sans-serif;
-}
+    body.theme-professional {
+        background: #f8f9fa;
+    }
 
-body{
-  background:#f4f6f9;
-  color:#333;
-}
+    header {
+        padding: 0;
+        margin: 0;
+    }
 
-/* ---------- HEADER ---------- */
-header{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  padding:15px 8%;
-  background:#0d6efd;
-  color:white;
-}
+    .hero {
+        background: linear-gradient(135deg, rgba(26, 54, 93, 0.8) 0%, rgba(45, 90, 140, 0.8) 100%), 
+                    url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 600"><rect fill="%23e3f2fd" width="1200" height="600"/><path fill="%231e3a8a" opacity="0.1" d="M0 300 Q300 150 600 300 T1200 300 L1200 600 L0 600 Z"/></svg>');
+        background-size: cover;
+        background-position: center;
+        background-attachment: fixed;
+        padding: 60px 20px;
+        text-align: center;
+        color: white;
+        min-height: 300px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
 
-header h1{
-  font-size:24px;
-}
+    .hero h1 {
+        font-size: 48px;
+        font-weight: 800;
+        margin: 0 0 20px 0;
+        text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        letter-spacing: 1px;
+    }
 
-nav a{
-  color:white;
-  text-decoration:none;
-  margin-left:20px;
-  font-weight:bold;
-}
+    .hero p {
+        font-size: 20px;
+        margin: 0 0 30px 0;
+        font-weight: 500;
+        text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+    }
 
-nav a:hover{
-  text-decoration:underline;
-}
+    .search-section {
+        background: white;
+        padding: 30px 20px;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        border-radius: 12px;
+        max-width: 600px;
+        margin: -40px auto 40px;
+        position: relative;
+        z-index: 10;
+    }
 
-/* ---------- HERO SECTION ---------- */
-.hero{
-  height:80vh;
-  background:url("https://images.unsplash.com/photo-1560185127-6ed189bf02f4") no-repeat center/cover;
-  display:flex;
-  flex-direction:column;
-  justify-content:center;
-  align-items:center;
-  color:white;
-  text-align:center;
-  padding:20px;
-}
+    .search-section h2 {
+        margin: 0 0 20px 0;
+        color: #1a365d;
+        font-size: 22px;
+        font-weight: 700;
+    }
 
-.hero h2{
-  font-size:40px;
-  margin-bottom:10px;
-}
+    .search-form {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+    }
 
-.hero p{
-  margin-bottom:20px;
-  font-size:18px;
-}
+    .search-form input[type="text"] {
+        flex: 1;
+        min-width: 200px;
+        padding: 12px 15px;
+        border: 2px solid #ddd;
+        border-radius: 6px;
+        font-size: 15px;
+        transition: all 0.3s ease;
+    }
 
-.search-bar{
-  display:flex;
-  background:white;
-  border-radius:30px;
-  overflow:hidden;
-  width:300px;
-}
+    .search-form input[type="text"]:focus {
+        outline: none;
+        border-color: #3498db;
+        box-shadow: 0 0 0 4px rgba(52, 152, 219, 0.1);
+    }
 
-.search-bar input{
-  border:none;
-  padding:10px;
-  flex:1;
-  outline:none;
-}
+    .search-form button {
+        padding: 12px 30px !important;
+        background: linear-gradient(135deg, #2d5a8c 0%, #3498db 100%) !important;
+        color: white !important;
+        border: none !important;
+        border-radius: 6px !important;
+        font-weight: 700 !important;
+        cursor: pointer;
+        transition: all 0.3s ease !important;
+        margin-top: 0 !important;
+    }
 
-.search-bar button{
-  background:#0d6efd;
-  color:white;
-  border:none;
-  padding:10px 20px;
-  cursor:pointer;
-}
+    .search-form button:hover {
+        transform: translateY(-2px) !important;
+        box-shadow: 0 6px 20px rgba(45, 90, 140, 0.3) !important;
+    }
 
-.search-bar button:hover{
-  background:#084298;
-}
+    .properties-section {
+        padding: 40px 20px;
+        max-width: 1200px;
+        margin: 0 auto;
+    }
 
-/* ---------- LISTINGS ---------- */
-.listings{
-  padding:50px 8%;
-}
+    .properties-section h2 {
+        text-align: center;
+        color: #1a365d;
+        font-size: 32px;
+        font-weight: 700;
+        margin-bottom: 40px;
+    }
 
-.listings h3{
-  text-align:center;
-  margin-bottom:30px;
-  font-size:28px;
-}
+    .properties-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+        gap: 30px;
+    }
 
-.cards{
-  display:grid;
-  grid-template-columns:repeat(auto-fit, minmax(250px,1fr));
-  gap:20px;
-}
+    .property-card {
+        background: white;
+        border-radius: 10px;
+        overflow: hidden;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        transition: all 0.3s ease;
+    }
 
-.card{
-  background:white;
-  border-radius:10px;
-  overflow:hidden;
-  box-shadow:0 4px 10px rgba(0,0,0,0.1);
-  transition:0.3s;
-}
+    .property-card:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 12px 30px rgba(0,0,0,0.15);
+    }
 
-.card:hover{
-  transform:translateY(-5px);
-}
+    .property-card-image {
+        width: 100%;
+        height: 200px;
+        background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 14px;
+        color: #666;
+        overflow: hidden;
+        position: relative;
+    }
 
-.card img{
-  width:100%;
-  height:180px;
-  object-fit:cover;
-}
+    .property-card-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
 
-.card-content{
-  padding:15px;
-}
+    .property-card-content {
+        padding: 20px;
+    }
 
-.card-content h4{
-  margin-bottom:8px;
-}
+    .property-card h3 {
+        margin: 0 0 10px 0;
+        color: #1a365d;
+        font-size: 18px;
+        font-weight: 700;
+    }
 
-.price{
-  color:#0d6efd;
-  font-weight:bold;
-}
+    .property-card p {
+        margin: 8px 0;
+        color: #7f8c8d;
+        font-size: 14px;
+    }
 
-/* ---------- FOOTER ---------- */
-footer{
-  background:#222;
-  color:white;
-  text-align:center;
-  padding:15px;
-  margin-top:40px;
-}
+    .property-card .price {
+        color: #27ae60;
+        font-size: 18px;
+        font-weight: 700;
+        margin: 15px 0;
+    }
 
-/* ---------- RESPONSIVE ---------- */
-@media(max-width:768px){
-  .hero h2{
-    font-size:28px;
-  }
-}
+    .property-card .status {
+        display: inline-block;
+        padding: 6px 12px;
+        border-radius: 20px;
+        font-size: 12px;
+        font-weight: 600;
+        margin-top: 10px;
+    }
+
+    .property-card .status.available {
+        background: #d4edda;
+        color: #155724;
+    }
+
+    .property-card .status.rented {
+        background: #f8d7da;
+        color: #721c24;
+    }
+
+    .property-card .btn {
+        display: inline-block;
+        margin-top: 15px;
+        padding: 10px 20px;
+        background: linear-gradient(135deg, #2d5a8c 0%, #3498db 100%);
+        color: white;
+        text-decoration: none;
+        border-radius: 6px;
+        font-weight: 600;
+        transition: all 0.3s ease;
+    }
+
+    .property-card .btn:hover {
+        transform: scale(1.05);
+        box-shadow: 0 4px 12px rgba(45, 90, 140, 0.3);
+    }
+
+    .add-home-section {
+        background: linear-gradient(135deg, #f0f4f8 0%, #e8f2f8 100%);
+        padding: 40px 20px;
+        margin-top: 40px;
+    }
+
+    .add-home-container {
+        max-width: 600px;
+        margin: 0 auto;
+        background: white;
+        padding: 40px;
+        border-radius: 12px;
+        box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+        border-top: 4px solid #3498db;
+    }
+
+    .add-home-container h2 {
+        text-align: center;
+        color: #1a365d;
+        margin: 0 0 30px 0;
+        font-size: 26px;
+        font-weight: 700;
+    }
+
+    .add-home-form label {
+        display: block;
+        margin-top: 15px;
+        margin-bottom: 6px;
+        font-weight: 700;
+        color: #2c3e50;
+        font-size: 14px;
+    }
+
+    .add-home-form input,
+    .add-home-form textarea,
+    .add-home-form select {
+        width: 100%;
+        padding: 12px 15px;
+        margin-top: 5px;
+        border: 2px solid #ddd;
+        border-radius: 6px;
+        font-size: 14px;
+        font-family: 'Segoe UI', Arial, sans-serif;
+        transition: all 0.3s ease;
+    }
+
+    .add-home-form input:focus,
+    .add-home-form textarea:focus,
+    .add-home-form select:focus {
+        outline: none;
+        border-color: #3498db;
+        box-shadow: 0 0 0 4px rgba(52, 152, 219, 0.1);
+    }
+
+    .add-home-form textarea {
+        resize: vertical;
+        min-height: 100px;
+    }
+
+    .add-home-form button {
+        width: 100%;
+        padding: 14px 20px !important;
+        margin-top: 25px !important;
+        background: linear-gradient(135deg, #27ae60 0%, #229954 100%) !important;
+        color: white !important;
+        border: none !important;
+        border-radius: 6px !important;
+        font-size: 16px !important;
+        font-weight: 700 !important;
+        cursor: pointer;
+        transition: all 0.3s ease !important;
+    }
+
+    .add-home-form button:hover {
+        transform: translateY(-2px) !important;
+        box-shadow: 0 8px 24px rgba(39, 174, 96, 0.3) !important;
+    }
+
+    nav {
+        background: linear-gradient(135deg, #1a365d 0%, #2d5a8c 100%);
+        padding: 0;
+        margin: 0;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+    }
+
+    nav ul {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+
+    nav ul li {
+        margin: 0;
+    }
+
+    nav ul li a {
+        display: inline-block;
+        padding: 14px 20px;
+        color: white;
+        text-decoration: none;
+        font-weight: 600;
+        transition: all 0.3s ease;
+        font-size: 15px;
+    }
+
+    nav ul li a:hover {
+        background: rgba(255,255,255,0.1);
+        transform: translateY(-2px);
+    }
+
+    nav ul li a.active {
+        background: rgba(52, 152, 219, 0.2);
+    }
+
+    @media(max-width: 768px) {
+        .hero h1 {
+            font-size: 28px;
+        }
+
+        .hero p {
+            font-size: 16px;
+        }
+
+        .search-form {
+            flex-direction: column;
+        }
+
+        .properties-grid {
+            grid-template-columns: 1fr;
+        }
+
+        nav ul {
+            flex-direction: column;
+        }
+
+        nav ul li a {
+        }
+    }
+
+    body.theme-green {
+        background: #f5f5f5;
+    }
+
+    body.theme-dark {
+        background: #1a1a1a;
+    }
 </style>
 </head>
-
-<body>
+<body class="theme-professional">
 
 <header>
-  <h1>Rent Home</h1>
-  <nav>
-    <a href="home.html">Home</a>
-    <a href="properties.html">properties</a>
-    <a href="">Contact</a>
-  </nav>
+    
 </header>
 
+<nav>
+    <ul>
+        <li><a href="home.html" class="active">Home</a></li>
+        <li><a href="book_home.html">Book Property</a></li>
+    </ul>
+</nav>
+
 <section class="hero">
-  <h2>Find Your Next Home</h2>
-  <p>Search apartments, houses & rooms for rent.</p>
-  <div class="search-bar">
-    <input type="text" id="searchInput" placeholder="Search property type..." />
-    <button onclick="searchProperty()">Search</button>
-  </div>
+    <h1>Find Your Perfect Home</h1>
+    <p>Browse hundreds of rental properties in your area</p>
 </section>
 
-<section class="listings">
-  <h3>Featured Listings</h3>
-  <div class="cards" id="propertyCards">
-
-    <div class="card">
-      <img src="https://images.unsplash.com/photo-1507089947368-19c1da9775ae" />
-      <div class="card-content">
-        <h4>2BHK Apartment</h4>
-        <p class="price">$1200 / month</p>
-      </div>
-    </div>
-
-    <div class="card">
-      <img src="https://images.unsplash.com/photo-1493809842364-78817add7ffb" />
-      <div class="card-content">
-        <h4>Studio Room</h4>
-        <p class="price">$700 / month</p>
-      </div>
-    </div>
-
-    <div class="card">
-      <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c" />
-      <div class="card-content">
-        <h4>3BHK House</h4>
-        <p class="price">$2000 / month</p>
-      </div>
-    </div>
-
-  </div>
+<section class="search-section">
+    <h2>Quick Search</h2>
+    <form class="search-form" method="GET" action="search.html">
+        <input type="text" name="location" placeholder="Enter location or city..." required>
+        <button type="submit">Search Properties</button>
+    </form>
 </section>
 
-<footer>
-  <p>© 2026 Rent Home | All Rights Reserved</p>
-</footer>
+<section class="properties-section">
+    <h2>Featured Properties</h2>
+    <div class="properties-grid">
+        <div class="property-card">
+            <div class="property-card-image">
+                <img src="https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=400&h=300&fit=crop" alt="Modern Apartment">
+            </div>
+            <div class="property-card-content">
+                <h3>Modern Apartment</h3>
+                <p><strong>Type:</strong> Apartment</p>
+                <p><strong>Location:</strong> Downtown</p>
+                <p><strong>Beds:</strong> 2 | <strong>Baths:</strong> 1</p>
+                <div class="price">$1,200/month</div>
+                <span class="status available">Available</span><br>
+                <a href="#" class="btn">View Details</a>
+            </div>
+        </div>
 
-<script>
-function searchProperty(){
-  let input = document.getElementById("searchInput").value.toLowerCase();
-  let cards = document.querySelectorAll(".card");
+        <div class="property-card">
+            <div class="property-card-image">
+                <img src="https://images.unsplash.com/photo-1494145904049-0dca59b4bbad?w=400&h=300&fit=crop" alt="Cozy Apartment">
+            </div>
+            <div class="property-card-content">
+                <h3>Cozy Studio</h3>
+                <p><strong>Type:</strong> Apartment</p>
+                <p><strong>Location:</strong> City Center</p>
+                <p><strong>Beds:</strong> 1 | <strong>Baths:</strong> 1</p>
+                <div class="price">$800/month</div>
+                <span class="status available">Available</span><br>
+                <a href="#" class="btn">View Details</a>
+            </div>
+        </div>
 
-  cards.forEach(card => {
-    let title = card.querySelector("h4").innerText.toLowerCase();
-    if(title.includes(input)){
-      card.style.display = "block";
-    } else {
-      card.style.display = "none";
-    }
-  });
-}
-</script>
+        <div class="property-card">
+            <div class="property-card-image">
+                <img src="https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=400&h=300&fit=crop" alt="Luxury Apartment">
+            </div>
+            <div class="property-card-content">
+                <h3>Luxury Apartment</h3>
+                <p><strong>Type:</strong> Apartment</p>
+                <p><strong>Location:</strong> Uptown</p>
+                <p><strong>Beds:</strong> 3 | <strong>Baths:</strong> 2</p>
+                <div class="price">$1,800/month</div>
+                <span class="status rented">Rented</span><br>
+                <a href="#" class="btn">View Details</a>
+            </div>
+        </div>
+
+        <div class="property-card">
+            <div class="property-card-image">
+                <img src="https://images.unsplash.com/photo-1552321554-5fefe8c9ef14?w=400&h=300&fit=crop" alt="Spacious Apartment">
+            </div>
+            <div class="property-card-content">
+                <h3>Spacious Apartment</h3>
+                <p><strong>Type:</strong> Apartment</p>
+                <p><strong>Location:</strong> Midtown</p>
+                <p><strong>Beds:</strong> 2 | <strong>Baths:</strong> 2</p>
+                <div class="price">$1,400/month</div>
+                <span class="status available">Available</span><br>
+                <a href="#" class="btn">View Details</a>
+            </div>
+        </div>
+
+        <div class="property-card">
+            <div class="property-card-image">
+                <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=300&fit=crop" alt="Contemporary Apartment">
+            </div>
+            <div class="property-card-content">
+                <h3>Contemporary Apartment</h3>
+                <p><strong>Type:</strong> Apartment</p>
+                <p><strong>Location:</strong> Heights</p>
+                <p><strong>Beds:</strong> 1 | <strong>Baths:</strong> 1</p>
+                <div class="price">$950/month</div>
+                <span class="status available">Available</span><br>
+                <a href="#" class="btn">View Details</a>
+            </div>
+        </div>
+
+        <div class="property-card">
+            <div class="property-card-image">
+                <img src="https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=400&h=300&fit=crop" alt="Luxury Villa">
+            </div>
+            <div class="property-card-content">
+                <h3>Luxury Villa</h3>
+                <p><strong>Type:</strong> House</p>
+                <p><strong>Location:</strong> Suburban</p>
+                <p><strong>Beds:</strong> 4 | <strong>Baths:</strong> 2</p>
+                <div class="price">$2,500/month</div>
+                <span class="status rented">Rented</span><br>
+                <a href="#" class="btn">View Details</a>
+            </div>
+        </div>
+
+        <div class="property-card">
+            <div class="property-card-image">
+                <img src="https://images.unsplash.com/photo-1560518883-d83d64892b00?w=400&h=300&fit=crop" alt="Modern House">
+            </div>
+            <div class="property-card-content">
+                <h3>Modern House</h3>
+                <p><strong>Type:</strong> House</p>
+                <p><strong>Location:</strong> Residential Area</p>
+                <p><strong>Beds:</strong> 3 | <strong>Baths:</strong> 2</p>
+                <div class="price">$1,900/month</div>
+                <span class="status available">Available</span><br>
+                <a href="#" class="btn">View Details</a>
+            </div>
+        </div>
+
+        <div class="property-card">
+            <div class="property-card-image">
+                <img src="https://images.unsplash.com/photo-1560080876-daf8d37ad57b?w=400&h=300&fit=crop" alt="Classic House">
+            </div>
+            <div class="property-card-content">
+                <h3>Classic House</h3>
+                <p><strong>Type:</strong> House</p>
+                <p><strong>Location:</strong> Hillside</p>
+                <p><strong>Beds:</strong> 4 | <strong>Baths:</strong> 3</p>
+                <div class="price">$2,200/month</div>
+                <span class="status available">Available</span><br>
+                <a href="#" class="btn">View Details</a>
+            </div>
+        </div>
+
+        <div class="property-card">
+            <div class="property-card-image">
+                <img src="https://images.unsplash.com/photo-1570129477492-45d003cdd643?w=400&h=300&fit=crop" alt="Countryside House">
+            </div>
+            <div class="property-card-content">
+                <h3>Countryside House</h3>
+                <p><strong>Type:</strong> House</p>
+                <p><strong>Location:</strong> Rural Area</p>
+                <p><strong>Beds:</strong> 3 | <strong>Baths:</strong> 1</p>
+                <div class="price">$1,500/month</div>
+                <span class="status available">Available</span><br>
+                <a href="#" class="btn">View Details</a>
+            </div>
+        </div>
+
+        <div class="property-card">
+            <div class="property-card-image">
+                <img src="https://images.unsplash.com/photo-1568605114967-8130f3a36994?w=400&h=300&fit=crop" alt="Family House">
+            </div>
+            <div class="property-card-content">
+                <h3>Family House</h3>
+                <p><strong>Type:</strong> House</p>
+                <p><strong>Location:</strong> Riverside</p>
+                <p><strong>Beds:</strong> 5 | <strong>Baths:</strong> 3</p>
+                <div class="price">$2,800/month</div>
+                <span class="status rented">Rented</span><br>
+                <a href="#" class="btn">View Details</a>
+            </div>
+        </div>
+
+        <div class="property-card">
+            <div class="property-card-image">
+                <img src="https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=400&h=300&fit=crop" alt="Retail Shop">
+            </div>
+            <div class="property-card-content">
+                <h3>Retail Shop</h3>
+                <p><strong>Type:</strong> Shop</p>
+                <p><strong>Location:</strong> Main Street</p>
+                <p><strong>Size:</strong> 2000 sq ft</p>
+                <div class="price">$2,000/month</div>
+                <span class="status available">Available</span><br>
+                <a href="#" class="btn">View Details</a>
+            </div>
+        </div>
+
+        <div class="property-card">
+            <div class="property-card-image">
+                <img src="https://images.unsplash.com/photo-1579487785986-fd4bebf474cc?w=400&h=300&fit=crop" alt="Modern Shop">
+            </div>
+            <div class="property-card-content">
+                <h3>Modern Shop</h3>
+                <p><strong>Type:</strong> Shop</p>
+                <p><strong>Location:</strong> Shopping Mall</p>
+                <p><strong>Size:</strong> 1500 sq ft</p>
+                <div class="price">$1,600/month</div>
+                <span class="status available">Available</span><br>
+                <a href="#" class="btn">View Details</a>
+            </div>
+        </div>
+
+        <div class="property-card">
+            <div class="property-card-image">
+                <img src="https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?w=400&h=300&fit=crop" alt="Boutique Shop">
+            </div>
+            <div class="property-card-content">
+                <h3>Boutique Shop</h3>
+                <p><strong>Type:</strong> Shop</p>
+                <p><strong>Location:</strong> Fashion District</p>
+                <p><strong>Size:</strong> 1000 sq ft</p>
+                <div class="price">$1,400/month</div>
+                <span class="status rented">Rented</span><br>
+                <a href="#" class="btn">View Details</a>
+            </div>
+        </div>
+
+        <div class="property-card">
+            <div class="property-card-image">
+                <img src="https://images.unsplash.com/photo-1552062407-291493175b69?w=400&h=300&fit=crop" alt="Cafe Shop">
+            </div>
+            <div class="property-card-content">
+                <h3>Cafe Shop</h3>
+                <p><strong>Type:</strong> Shop</p>
+                <p><strong>Location:</strong> Downtown</p>
+                <p><strong>Size:</strong> 800 sq ft</p>
+                <div class="price">$1,200/month</div>
+                <span class="status available">Available</span><br>
+                <a href="#" class="btn">View Details</a>
+            </div>
+        </div>
+
+        <div class="property-card">
+            <div class="property-card-image">
+                <img src="https://images.unsplash.com/photo-1559233527-a0cf4d426dec?w=400&h=300&fit=crop" alt="Office Shop">
+            </div>
+            <div class="property-card-content">
+                <h3>Office Shop</h3>
+                <p><strong>Type:</strong> Shop</p>
+                <p><strong>Location:</strong> Business District</p>
+                <p><strong>Size:</strong> 2500 sq ft</p>
+                <div class="price">$2,300/month</div>
+                <span class="status available">Available</span><br>
+                <a href="#" class="btn">View Details</a>
+            </div>
+        </div>
+
+        <div class="property-card">
+            <div class="property-card-image">
+                <img src="https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=400&h=300&fit=crop" alt="Downtown Apartment">
+            </div>
+            <div class="property-card-content">
+                <h3>Downtown Apartment</h3>
+                <p><strong>Type:</strong> Apartment</p>
+                <p><strong>Location:</strong> Arts District</p>
+                <p><strong>Beds:</strong> 2 | <strong>Baths:</strong> 1</p>
+                <div class="price">$1,350/month</div>
+                <span class="status available">Available</span><br>
+                <a href="#" class="btn">View Details</a>
+            </div>
+        </div>
+
+        <div class="property-card">
+            <div class="property-card-image">
+                <img src="https://images.unsplash.com/photo-1493857671505-72967e2e2760?w=400&h=300&fit=crop" alt="Waterfront House">
+            </div>
+            <div class="property-card-content">
+                <h3>Waterfront House</h3>
+                <p><strong>Type:</strong> House</p>
+                <p><strong>Location:</strong> Waterfront</p>
+                <p><strong>Beds:</strong> 4 | <strong>Baths:</strong> 2</p>
+                <div class="price">$3,000/month</div>
+                <span class="status available">Available</span><br>
+                <a href="#" class="btn">View Details</a>
+            </div>
+        </div>
+
+        <div class="property-card">
+            <div class="property-card-image">
+                <img src="https://images.unsplash.com/photo-1488146076017-235fde8d81e7?w=400&h=300&fit=crop" alt="Premium Shop">
+            </div>
+            <div class="property-card-content">
+                <h3>Premium Shop</h3>
+                <p><strong>Type:</strong> Shop</p>
+                <p><strong>Location:</strong> Luxury Center</p>
+                <p><strong>Size:</strong> 3000 sq ft</p>
+                <div class="price">$3,500/month</div>
+                <span class="status rented">Rented</span><br>
+                <a href="#" class="btn">View Details</a>
+            </div>
+        </div>
+
+        <div class="property-card">
+            <div class="property-card-image">
+                <img src="https://images.unsplash.com/photo-1545259741-2ea3ebf61fa3?w=400&h=300&fit=crop" alt="Garden Apartment">
+            </div>
+            <div class="property-card-content">
+                <h3>Garden Apartment</h3>
+                <p><strong>Type:</strong> Apartment</p>
+                <p><strong>Location:</strong> Park Area</p>
+                <p><strong>Beds:</strong> 2 | <strong>Baths:</strong> 2</p>
+                <div class="price">$1,600/month</div>
+                <span class="status available">Available</span><br>
+                <a href="#" class="btn">View Details</a>
+            </div>
+        </div>
+
+        <div class="property-card">
+            <div class="property-card-image">
+                <img src="https://images.unsplash.com/photo-1552095881-6247a5e5b6a2?w=400&h=300&fit=crop" alt="Beach House">
+            </div>
+            <div class="property-card-content">
+                <h3>Beach House</h3>
+                <p><strong>Type:</strong> House</p>
+                <p><strong>Location:</strong> Beachfront</p>
+                <p><strong>Beds:</strong> 3 | <strong>Baths:</strong> 2</p>
+                <div class="price">$2,600/month</div>
+                <span class="status available">Available</span><br>
+                <a href="#" class="btn">View Details</a>
+            </div>
+        </div>
+
+        <div class="property-card">
+            <div class="property-card-image">
+                <img src="https://images.unsplash.com/photo-1513635269975-59663e0ac1ad?w=400&h=300&fit=crop" alt="Fashion Shop">
+            </div>
+            <div class="property-card-content">
+                <h3>Fashion Shop</h3>
+                <p><strong>Type:</strong> Shop</p>
+                <p><strong>Location:</strong> Retail Hub</p>
+                <p><strong>Size:</strong> 1800 sq ft</p>
+                <div class="price">$1,800/month</div>
+                <span class="status available">Available</span><br>
+                <a href="#" class="btn">View Details</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="add-home-section">
+    <div class="add-home-container">
+        <h2>Add New Property</h2>
+        <form method="POST" enctype="multipart/form-data" class="add-home-form">
+            <label for="title">Property Title:</label>
+            <input type="text" id="title" name="title" placeholder="Enter property title" required>
+
+            <label for="type">Property Type:</label>
+            <select id="type" name="type" required>
+                <option value="">Select Type</option>
+                <option value="Apartment">Apartment</option>
+                <option value="House">House</option>
+                <option value="Studio">Studio</option>
+                <option value="Condo">Condo</option>
+                <option value="Villa">Villa</option>
+            </select>
+
+            <label for="location">Location:</label>
+            <input type="text" id="location" name="location" placeholder="Enter property location" required>
+
+            <label for="rent_amount">Monthly Rent Amount ($):</label>
+            <input type="number" id="rent_amount" name="rent_amount" placeholder="0.00" min="0" step="0.01" required>
+
+            <label for="bedrooms">Bedrooms:</label>
+            <input type="number" id="bedrooms" name="bedrooms" placeholder="0" min="0" required>
+
+            <label for="bathrooms">Bathrooms:</label>
+            <input type="number" id="bathrooms" name="bathrooms" placeholder="0" min="0" required>
+
+            <label for="parking">Parking:</label>
+            <input type="text" id="parking" name="parking" placeholder="e.g., 1 space, Garage">
+
+            <label for="description">Description:</label>
+            <textarea id="description" name="description" placeholder="Describe the property features and amenities..."></textarea>
+
+            <label for="image">Property Image:</label>
+            <input type="file" id="image" name="image" accept="image/*" required>
+
+            <button type="submit" name="submit">Add Property</button>
+        </form>
+    </div>
+</section>
 
 </body>
 </html>

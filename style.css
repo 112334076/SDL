@@ -1,0 +1,131 @@
+/* BASE STYLES */
+*{box-sizing:border-box;}
+body{font-family:'Segoe UI',Arial,sans-serif;margin:0;padding:0;transition:all 0.3s ease;}
+header{padding:20px;text-align:center;color:white;transition:all 0.3s ease;}
+header h1{margin:0;font-size:28px;}
+main{padding:20px;}
+
+/* FORM STYLES */
+.admin-login-form,.booking-form{max-width:400px;margin:30px auto;padding:20px;border-radius:8px;box-shadow:0 4px 15px rgba(0,0,0,0.15);transition:all 0.3s ease;}
+.admin-login-form label,.booking-form label{display:block;margin-top:12px;font-weight:500;}
+.admin-login-form input,.booking-form input{width:100%;padding:10px;margin-top:5px;border:2px solid #ddd;border-radius:5px;font-size:14px;transition:all 0.3s ease;}
+.admin-login-form input:focus,.booking-form input:focus{outline:none;border-color:inherit;box-shadow:0 0 10px rgba(0,0,0,0.1);}
+.admin-login-form button,.booking-form button{margin-top:20px;padding:12px 20px;color:white;border:none;border-radius:5px;cursor:pointer;font-size:16px;font-weight:bold;transition:all 0.3s ease;width:100%;}
+.admin-login-form button:hover,.booking-form button:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(0,0,0,0.2);}
+
+/* HOME CARDS */
+.home-list,.home-grid{display:flex;flex-wrap:wrap;gap:20px;padding:20px;justify-content:center;}
+.home-card{padding:15px;width:250px;border-radius:8px;box-shadow:0 4px 12px rgba(0,0,0,0.1);text-align:center;transition:all 0.3s ease;border:1px solid rgba(0,0,0,0.1);}
+.home-card:hover{transform:translateY(-5px);box-shadow:0 8px 20px rgba(0,0,0,0.2);}
+.home-card img{width:100%;height:150px;border-radius:8px;object-fit:cover;}
+.home-card h3{margin:10px 0 5px;}
+.home-card p{margin:5px 0;font-size:14px;}
+.home-card a{display:inline-block;margin-top:10px;padding:8px 15px;color:white;text-decoration:none;border-radius:5px;transition:all 0.3s ease;}
+.home-card a:hover{transform:scale(1.05);}
+
+/* STATUS COLORS */
+.available{color:green;font-weight:bold;}
+.rented{color:red;font-weight:bold;}
+
+/* BUTTONS */
+button{padding:10px 15px;margin-top:10px;color:white;border:none;border-radius:5px;cursor:pointer;transition:all 0.3s ease;}
+button:disabled{background:#999;cursor:not-allowed;opacity:0.6;}
+button:hover:not(:disabled){transform:translateY(-2px);box-shadow:0 4px 12px rgba(0,0,0,0.2);}
+
+/* INPUT STYLING */
+input[type="text"],input[type="email"],input[type="password"],input[type="number"],input[type="file"],textarea{width:100%;padding:10px;border:2px solid #ddd;border-radius:5px;font-family:'Segoe UI',Arial,sans-serif;transition:all 0.3s ease;}
+input[type="text"]:focus,input[type="email"]:focus,input[type="password"]:focus,input[type="number"]:focus,input[type="file"]:focus,textarea:focus{outline:none;box-shadow:0 0 12px rgba(76,175,80,0.4);}
+textarea{resize:vertical;min-height:100px;}
+
+/* RESPONSIVE */
+@media(max-width:768px){.home-card{width:45%;}}
+@media(max-width:480px){.home-card{width:90%;}}
+
+/* ===== THEME 1: GREEN (DEFAULT) ===== */
+body.theme-green{background:#e3f2fd;}
+body.theme-green header{background:#4CAF50;}
+body.theme-green .admin-login-form,body.theme-green .booking-form{background:#fff;}
+body.theme-green .admin-login-form input,body.theme-green .booking-form input{border-color:#ddd;}
+body.theme-green .admin-login-form input:focus,body.theme-green .booking-form input:focus{border-color:#4CAF50;box-shadow:0 0 10px rgba(76,175,80,0.4);}
+body.theme-green .admin-login-form button,body.theme-green .booking-form button{background:#4CAF50;}
+body.theme-green .admin-login-form button:hover,body.theme-green .booking-form button:hover{background:#45a049;}
+body.theme-green button{background:#4CAF50;}
+body.theme-green button:hover{background:#45a049;}
+body.theme-green .home-card{background:#fff;border-color:#e0e0e0;}
+body.theme-green .home-card a{background:#4CAF50;}
+body.theme-green .home-card a:hover{background:#45a049;}
+
+/* ===== THEME 2: DARK ===== */
+body.theme-dark{background:#1a1a1a;color:#e0e0e0;}
+body.theme-dark header{background:#0d0d0d;border-bottom:3px solid #4CAF50;}
+body.theme-dark main{color:#e0e0e0;}
+body.theme-dark .admin-login-form,body.theme-dark .booking-form{background:#2a2a2a;color:#e0e0e0;}
+body.theme-dark .admin-login-form label,body.theme-dark .booking-form label{color:#e0e0e0;}
+body.theme-dark .admin-login-form input,body.theme-dark .booking-form input{background:#333;color:#e0e0e0;border-color:#444;}
+body.theme-dark .admin-login-form input:focus,body.theme-dark .booking-form input:focus{border-color:#4CAF50;background:#333;}
+body.theme-dark .admin-login-form button,body.theme-dark .booking-form button{background:#4CAF50;color:#000;}
+body.theme-dark button{background:#4CAF50;color:#000;}
+body.theme-dark .home-card{background:#2a2a2a;border-color:#444;color:#e0e0e0;}
+body.theme-dark .home-card a{background:#4CAF50;color:#000;}
+body.theme-dark .home-card h3{color:#4CAF50;}
+
+/* ===== THEME 3: BLUE ===== */
+body.theme-blue{background:#e3f2fd;}
+body.theme-blue header{background:#1e3a8a;}
+body.theme-blue .admin-login-form,body.theme-blue .booking-form{background:#fff;border-top:4px solid #1e3a8a;}
+body.theme-blue .admin-login-form button,body.theme-blue .booking-form button{background:#1e3a8a;}
+body.theme-blue .admin-login-form button:hover,body.theme-blue .booking-form button:hover{background:#1833cc;}
+body.theme-blue button{background:#1e3a8a;}
+body.theme-blue button:hover{background:#1833cc;}
+body.theme-blue .home-card{background:#fff;border-left:4px solid #1e3a8a;}
+body.theme-blue .home-card a{background:#1e3a8a;}
+body.theme-blue .home-card a:hover{background:#1833cc;}
+body.theme-blue .admin-login-form input:focus,body.theme-blue .booking-form input:focus{box-shadow:0 0 10px rgba(30,58,138,0.3);border-color:#1e3a8a;}
+
+/* ===== THEME 4: PURPLE ===== */
+body.theme-purple{background:#e3f2fd;}
+body.theme-purple header{background:#7c3aed;}
+body.theme-purple .admin-login-form,body.theme-purple .booking-form{background:#fff;}
+body.theme-purple .admin-login-form button,body.theme-purple .booking-form button{background:#7c3aed;}
+body.theme-purple .admin-login-form button:hover,body.theme-purple .booking-form button:hover{background:#6d28d9;}
+body.theme-purple button{background:#7c3aed;}
+body.theme-purple button:hover{background:#6d28d9;}
+body.theme-purple .home-card{background:#fff;border-top:3px solid #7c3aed;}
+body.theme-purple .home-card a{background:#7c3aed;}
+body.theme-purple .home-card a:hover{background:#6d28d9;}
+body.theme-purple .admin-login-form input:focus,body.theme-purple .booking-form input:focus{box-shadow:0 0 10px rgba(124,58,237,0.3);border-color:#7c3aed;}
+
+/* ===== THEME 5: ORANGE ===== */
+body.theme-orange{background:#e3f2fd;}
+body.theme-orange header{background:#ea580c;}
+body.theme-orange .admin-login-form,body.theme-orange .booking-form{background:#fff;box-shadow:0 4px 15px rgba(234,88,12,0.15);}
+body.theme-orange .admin-login-form button,body.theme-orange .booking-form button{background:#ea580c;}
+body.theme-orange .admin-login-form button:hover,body.theme-orange .booking-form button:hover{background:#c2410c;}
+body.theme-orange button{background:#ea580c;}
+body.theme-orange button:hover{background:#c2410c;}
+body.theme-orange .home-card{background:#fff;border-left:5px solid #ea580c;}
+body.theme-orange .home-card a{background:#ea580c;}
+body.theme-orange .home-card a:hover{background:#c2410c;}
+body.theme-orange .admin-login-form input:focus,body.theme-orange .booking-form input:focus{box-shadow:0 0 10px rgba(234,88,12,0.3);border-color:#ea580c;}
+
+/* ===== THEME 6: PROFESSIONAL ===== */
+body.theme-professional{background:#e3f2fd;color:#2c3e50;}
+body.theme-professional header{background:linear-gradient(135deg,#1a365d 0%,#2d5a8c 100%);border-bottom:none;}
+body.theme-professional header h1{font-weight:700;letter-spacing:0.5px;}
+body.theme-professional main{color:#2c3e50;}
+body.theme-professional .admin-login-form,body.theme-professional .booking-form{background:#fff;border:1px solid #e0e0e0;box-shadow:0 2px 10px rgba(0,0,0,0.08);}
+body.theme-professional .admin-login-form label,body.theme-professional .booking-form label{color:#2c3e50;font-size:15px;font-weight:600;}
+body.theme-professional .admin-login-form input,body.theme-professional .booking-form input{border:1px solid #cbd5e0;background:#f8f9fa;color:#2c3e50;}
+body.theme-professional .admin-login-form input:focus,body.theme-professional .booking-form input:focus{background:#fff;border-color:#3498db;box-shadow:0 0 0 3px rgba(52,152,219,0.1);}
+body.theme-professional .admin-login-form button,body.theme-professional .booking-form button{background:linear-gradient(135deg,#2d5a8c 0%,#3498db 100%);font-weight:600;letter-spacing:0.5px;}
+body.theme-professional .admin-login-form button:hover,body.theme-professional .booking-form button:hover{background:linear-gradient(135deg,#1a365d 0%,#2d5a8c 100%);box-shadow:0 4px 15px rgba(45,90,140,0.3);}
+body.theme-professional button{background:linear-gradient(135deg,#2d5a8c 0%,#3498db 100%);font-weight:600;}
+body.theme-professional button:hover{background:linear-gradient(135deg,#1a365d 0%,#2d5a8c 100%);box-shadow:0 4px 15px rgba(45,90,140,0.3);}
+body.theme-professional .home-card{background:#fff;border:1px solid #e0e0e0;box-shadow:0 2px 8px rgba(0,0,0,0.06);}
+body.theme-professional .home-card:hover{box-shadow:0 8px 24px rgba(0,0,0,0.12);border-color:#3498db;}
+body.theme-professional .home-card h3{color:#1a365d;font-weight:700;}
+body.theme-professional .home-card p{color:#7f8c8d;font-size:14px;}
+body.theme-professional .home-card a{background:linear-gradient(135deg,#2d5a8c 0%,#3498db 100%);font-weight:600;border:none;}
+body.theme-professional .home-card a:hover{background:linear-gradient(135deg,#1a365d 0%,#2d5a8c 100%);}
+body.theme-professional .available{color:#27ae60;font-weight:700;}
+body.theme-professional .rented{color:#e74c3c;font-weight:700;}

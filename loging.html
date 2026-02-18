@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Rent Management System</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .login-container {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+            max-width: 500px;
+            width: 100%;
+        }
+
+        .login-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .login-header h1 {
+            font-size: 28px;
+            margin-bottom: 10px;
+        }
+
+        .login-header p {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+
+        .tabs {
+            display: flex;
+            background: #f5f5f5;
+            border-bottom: 2px solid #ddd;
+        }
+
+        .tab-btn {
+            flex: 1;
+            padding: 15px;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 600;
+            color: #666;
+            transition: all 0.3s ease;
+        }
+
+        .tab-btn.active {
+            background: white;
+            color: #667eea;
+            border-bottom: 3px solid #667eea;
+        }
+
+        .tab-btn:hover {
+            background: white;
+        }
+
+        .tab-content {
+            display: none;
+            padding: 40px;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            font-size: 14px;
+            transition: border-color 0.3s ease;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 5px rgba(102, 126, 234, 0.3);
+        }
+
+        .remember-forgot {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            font-size: 13px;
+        }
+
+        .remember-forgot input[type="checkbox"] {
+            width: auto;
+            margin-right: 5px;
+            cursor: pointer;
+        }
+
+        .remember-forgot a {
+            color: #667eea;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .remember-forgot a:hover {
+            color: #764ba2;
+            text-decoration: underline;
+        }
+
+        .login-btn {
+            width: 100%;
+            padding: 12px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s ease, box-shadow 0.3s ease;
+            margin-top: 10px;
+        }
+
+        .login-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        .login-btn:active {
+            transform: translateY(0);
+        }
+
+        .signup-link {
+            text-align: center;
+            margin-top: 20px;
+            color: #666;
+            font-size: 14px;
+        }
+
+        .signup-link a {
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s ease;
+        }
+
+        .signup-link a:hover {
+            color: #764ba2;
+        }
+
+        .error-message {
+            background: #fee;
+            color: #c33;
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            font-size: 14px;
+            display: none;
+            border-left: 4px solid #c33;
+        }
+
+        .success-message {
+            background: #efe;
+            color: #3c3;
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            font-size: 14px;
+            display: none;
+            border-left: 4px solid #3c3;
+        }
+
+        .form-divider {
+            text-align: center;
+            margin: 20px 0;
+            color: #999;
+            font-size: 13px;
+        }
+
+        .logo-section {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .logo-section img {
+            max-width: 60px;
+            height: auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <div class="login-header">
+            <h1>🏠 Rent house</h1>
+            <p>User & Admin Login Portal</p>
+        </div>
+        <div class="tabs">
+            <button class="tab-btn active" onclick="switchTab('user')">User Login</button>
+            <button class="tab-btn" onclick="switchTab('admin')">Admin Login</button>
+        </div>
+        <div id="user" class="tab-content active">
+            <div class="error-message" id="userError"></div>
+            <div class="success-message" id="userSuccess"></div>
+
+            <form id="userLoginForm" onsubmit="handleUserLogin(event)">
+                <div class="form-group">
+                    <label for="userEmail">Email Address</label>
+                    <input 
+                        type="email" 
+                        id="userEmail" 
+                        name="email" 
+                        placeholder="Enter your email" 
+                        required
+                    >
+                </div>
+
+                <div class="form-group">
+                    <label for="userPassword">Password</label>
+                    <input 
+                        type="password" 
+                        id="userPassword" 
+                        name="password" 
+                        placeholder="Enter your password" 
+                        required
+                    >
+                </div>
+
+                <div class="remember-forgot">
+                    <label>
+                        <input type="checkbox" name="remember"> Remember me
+                    </label>
+                    <a href="#forgot">Forgot Password?</a>
+                </div>
+
+                <button type="submit" class="login-btn">Login as User</button>
+
+                <div class="signup-link">
+                    Don't have an account? <a href="#signup">Sign up here</a>
+                </div>
+            </form>
+        </div>
+        <div id="admin" class="tab-content">
+            <div class="error-message" id="adminError"></div>
+            <div class="success-message" id="adminSuccess"></div>
+
+            <form id="adminLoginForm" onsubmit="handleAdminLogin(event)">
+                <div class="form-group">
+                    <label for="adminUsername">Admin Username</label>
+                    <input 
+                        type="text" 
+                        id="adminUsername" 
+                        name="username" 
+                        placeholder="Enter admin username" 
+                        required
+                    >
+                </div>
+
+                <div class="form-group">
+                    <label for="adminPassword">Admin Password</label>
+                    <input 
+                        type="password" 
+                        id="adminPassword" 
+                        name="password" 
+                        placeholder="Enter admin password" 
+                        required
+                    >
+                </div>
+                <div class="form-group">
+                    <label for="adminKey">Security Key</label>
+                    <input 
+                        type="password" 
+                        id="adminKey" 
+                        name="securityKey" 
+                        placeholder="Enter security key" 
+                        required
+                    >
+                </div>
+
+                <div class="remember-forgot">
+                    <label>
+                        <input type="checkbox" name="rememberAdmin"> Remember me
+                    </label>
+                </div>
+                <button type="submit" class="login-btn">Login as Admin</button>
+
+                <div class="signup-link">
+                    <a href="#support">Contact Support</a>
+                </div>
+            </form>
+        </div>
+    </div>
+    <script>
+        function switchTab(tabName) {
+
+            const tabContents = document.querySelectorAll('.tab-content');
+            tabContents.forEach(content => {
+                content.classList.remove('active');
+            });
+            const tabBtns = document.querySelectorAll('.tab-btn');
+            tabBtns.forEach(btn => {
+                btn.classList.remove('active');
+            });
+            document.getElementById(tabName).classList.add('active');
+            event.target.classList.add('active');           
+            clearMessages();
+        }        
+        function handleUserLogin(event) {
+            event.preventDefault();
+            const email = document.getElementById('userEmail').value;
+            const password = document.getElementById('userPassword').value;
+            const remember = document.querySelector('input[name="remember"]').checked;          
+            clearUserMessages();          
+            if (!email || !password) {
+                showUserError('Please fill in all fields');
+                return;
+            } 
+            const formData = new FormData();
+            formData.append('action', 'user_login');
+            formData.append('email', email);
+            formData.append('password', password);
+            formData.append('remember', remember);
+
+            fetch('login_process.php', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    showUserSuccess('Login successful! Redirecting...');
+                    setTimeout(() => {
+                        window.location.href = data.redirect || 'home.html';
+                    }, 1500);
+                } else {
+                    showUserError(data.message || 'Login failed. Please try again.');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                showUserError('An error occurred. Please try again.');
+            });
+        }
+        function handleAdminLogin(event) {
+            event.preventDefault();
+            const username = document.getElementById('adminUsername').value;
+            const password = document.getElementById('adminPassword').value;
+            const securityKey = document.getElementById('adminKey').value;
+            const remember = document.querySelector('input[name="rememberAdmin"]').checked;
+            clearAdminMessages();
+            if (!username || !password || !securityKey) {
+                showAdminError('Please fill in all fields');
+                return;
+            }
+            const formData = new FormData();
+            formData.append('action', 'admin_login');
+            formData.append('username', username);
+            formData.append('password', password);
+            formData.append('securityKey', securityKey);
+            formData.append('remember', remember);
+
+            fetch('login_process.php', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    showAdminSuccess('Admin login successful! Redirecting...');
+                    setTimeout(() => {
+                        window.location.href = data.redirect || 'admin_dashboard.php';
+                    }, 1500);
+                } else {
+                    showAdminError(data.message || 'Admin login failed. Please check your credentials.');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                showAdminError('An error occurred. Please try again.');
+            });
+        }
+        function showUserError(message) {
+            const errorDiv = document.getElementById('userError');
+            errorDiv.textContent = message;
+            errorDiv.style.display = 'block';
+        }
+
+        function showUserSuccess(message) {
+            const successDiv = document.getElementById('userSuccess');
+            successDiv.textContent = message;
+            successDiv.style.display = 'block';
+        }
+
+        function showAdminError(message) {
+            const errorDiv = document.getElementById('adminError');
+            errorDiv.textContent = message;
+            errorDiv.style.display = 'block';
+        }
+
+        function showAdminSuccess(message) {
+            const successDiv = document.getElementById('adminSuccess');
+            successDiv.textContent = message;
+            successDiv.style.display = 'block';
+        }
+
+        function clearUserMessages() {
+            document.getElementById('userError').style.display = 'none';
+            document.getElementById('userSuccess').style.display = 'none';
+        }
+        function clearAdminMessages() {
+            document.getElementById('adminError').style.display = 'none';
+            document.getElementById('adminSuccess').style.display = 'none';
+        }
+        function clearMessages() {
+            clearUserMessages();
+            clearAdminMessages();
+        }
+        document.addEventListener('DOMContentLoaded', function() {
+            const messages = document.querySelectorAll('.error-message, .success-message');
+            messages.forEach(msg => {
+                if (msg.style.display === 'block') {
+                    setTimeout(() => {
+                        msg.style.display = 'none';
+                    }, 5000);
+                }
+            });
+        });
+    </script>
+</body>
+</html>
